@@ -2,7 +2,7 @@ const path = require("path");
 const axios = require("axios");
 const cheerio = require("cheerio");
 const fs = require("fs");
-
+const path = require("path");
 const puppeteer = require("puppeteer");
 
 // Read from an XML file which is a sitemap
@@ -11,10 +11,12 @@ const puppeteer = require("puppeteer");
 // and save it to a JSON file
 // Using puppeteer to render the page so this is bit slow and robust
 async function main(file_to_read, targetElementSelector, file_to_write) {
-  const xmlcontent = fs.readFileSync(file_to_read, "utf-8");
+  const filePath = path.join(__dirname, file_to_read);
+  const xmlcontent = fs.readFileSync(filePath, "utf-8");
   const $ = cheerio.load(xmlcontent, {
     xmlMode: true,
   });
+ 
 
   const urls = $("loc")
     .map((_, elem) => $(elem).text())
